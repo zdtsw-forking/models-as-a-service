@@ -468,8 +468,8 @@ func (h *Handler) SearchAPIKeys(c *gin.Context) {
 
 // TODO: cleanup unless we wanna keep /cleanup endpoint
 // CleanupExpiredEphemeralKeys handles POST /internal/v1/api-keys/cleanup
-// Deletes expired ephemeral API keys. Called by CronJob.
-// Access is restricted at the network level via NetworkPolicy.
+// Deletes expired ephemeral API keys. Called by in-process cleanup and the internal endpoint.
+// Cluster-internal only; not exposed on the external Service or Route.
 func (h *Handler) CleanupExpiredEphemeralKeys(c *gin.Context) {
 	count, err := h.service.CleanupExpiredEphemeral(c.Request.Context())
 	if err != nil {
